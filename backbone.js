@@ -1037,8 +1037,12 @@
 
     // Default JSON-request options.
     var params = _.extend({
-      type:         type,
-      dataType:     'json',
+      method:         type,
+      type:     'json',
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      },
       processData:  false
     }, options);
 
