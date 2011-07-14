@@ -32,7 +32,7 @@
   if (!_ && (typeof require !== 'undefined')) _ = require('underscore')._;
 
   // For Backbone's purposes, jQuery or Zepto owns the `$` variable.
-  var $ = root.jQuery || root.Zepto;
+  var $ = root.ender || root.jQuery || root.Zepto;
 
   // Runs Backbone.js in *noConflict* mode, returning the `Backbone` variable
   // to its previous owner. Returns a reference to this Backbone object.
@@ -883,7 +883,8 @@
   // This should be prefered to global lookups, if you're dealing with
   // a specific view.
   var selectorDelegate = function(selector) {
-    return $(selector, this.el);
+    if (this.sel) return $(selector, this.sel);
+    else return $(selector, this.el);
   };
 
   // Cached regex to split keys for `delegate`.
@@ -972,6 +973,8 @@
         var attr = viewOptions[i];
         if (options[attr]) this[attr] = options[attr];
       }
+      if (typeof options.el == "string") this.sel = options.el
+      if (typeof options.el == "string") this.el = $(options.el)
       this.options = options;
     },
 
