@@ -166,7 +166,16 @@
 
     // Return a copy of the model's `attributes` object.
     toJSON : function() {
-      return _.clone(this.attributes);
+      //return _.clone(this.attributes);
+      var csrf_token ="";
+      if ($('meta[name="csrf-token"]').length > 0 && $('meta[name="csrf-token"]') != undefined && $('meta[name="csrf-token"]')!= null) {
+            csrf_token = $('meta[name="csrf-token"]').attr('content');
+      }
+                
+      return _(_.clone(this.attributes)).extend({
+         'authenticity_token' : csrf_token //updated by Dinesh
+      });
+      
     },
 
     // Get the value of an attribute.
